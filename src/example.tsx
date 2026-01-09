@@ -3,8 +3,8 @@ import { createStore } from "./create-store";
 
 export const { Store, useStore } = createStore(() => {
   const [count, setCount] = useState(0);
-  const increment = () => setCount((count) => count);
-  const decrement = () => setCount((count) => count - 1);
+  const increment = () => setCount((prev) => prev + 1);
+  const decrement = () => setCount((prev) => prev - 1);
   return {
     count,
     increment,
@@ -32,8 +32,8 @@ type StoreProps = {
 export const { Store: StoreWithProps, useStore: useStoreWithProps } =
   createStore(({ initialCount, incrementBy }: StoreProps) => {
     const [count, setCount] = useState(initialCount);
-    const increment = () => setCount((count) => count + incrementBy);
-    const decrement = () => setCount((count) => count - 1);
+    const increment = () => setCount((prev) => prev + incrementBy);
+    const decrement = () => setCount((prev) => prev - incrementBy);
     return {
       count,
       increment,
@@ -66,8 +66,8 @@ export const {
 } = createStore<StoreType, StoreProps>(
   ({ initialCount, incrementBy }: StoreProps) => {
     const [count, setCount] = useState(initialCount);
-    const increment = () => setCount((count) => count + incrementBy);
-    const decrement = () => setCount((count) => count - 1);
+    const increment = () => setCount((prev) => prev + incrementBy);
+    const decrement = () => setCount((prev) => prev - 1);
     return {
       count,
       increment,

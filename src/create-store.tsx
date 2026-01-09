@@ -1,31 +1,49 @@
-import type { ComponentProps, Prettify } from "./types";
-import { Context, createContext, JSX } from "react";
+import type { ComponentProps, ContextValue, Prettify } from "./types";
+import { createContext, JSX, RefObject, useRef } from "react";
+import { useIsomorphicLayoutEffect } from "./use-iso-layout-effect";
 
 const createStore = <Value extends object, Props extends object>(
-  hook: (props: Props) => Value,
+  useHook: (props: Props) => Value,
 ): {
   Store: (props: Prettify<Props & ComponentProps>) => JSX.Element;
   useStore: () => Value;
 } => {
-  const StoreContext = createContext<{
-    listeners: ((payload: readonly [number, Value]) => void)[];
-    value: Value;
-    version: { current: number };
-  }>({
-    listeners: [],
-    value: {} as Value,
-    version: { current: -1 },
+  const StoreContext = createContext<RefObject<ContextValue<Value>>>({
+    current: {
+      subscribers: [],
+      value: { current: {} as Value },
+      version: { current: -1 },
+    },
   });
-  const PublicContext = StoreContext as unknown as Context<Value>;
+
   const Store = (props: Prettify<Props & ComponentProps>) => {
     const { children, ...rest } = props;
-    const hookValue = hook(rest as Props);
+
+    const hookValue = useHook(rest as Props);
+    const valueRef = useRef(hookValue);
+    const versionRef = useRef(0);
+
+    const contextValue = useRef<ContextValue<Value>>({
+      subscribers: [],
+      value: valueRef,
+      version: versionRef,
+    });
+
+    useIsomorphicLayoutEffect(() => {
+      contextValue.current.value.current = hookValue;
+      contextValue.current.version.current++;
+      contextValue.current.subscribers.forEach((subscriber) => {
+        subscriber([versionRef.current, hookValue]);
+      });
+    }, [hookValue]);
+
     return (
-      <PublicContext.Provider value={hookValue}>
+      <StoreContext.Provider value={contextValue}>
         {children}
-      </PublicContext.Provider>
+      </StoreContext.Provider>
     );
   };
+
   return {
     Store,
     useStore: () => null as unknown as Value,
