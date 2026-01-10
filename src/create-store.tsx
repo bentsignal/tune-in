@@ -1,6 +1,7 @@
 import type { ComponentProps, ContextValue, Prettify } from "./types";
 import { createContext, JSX, RefObject, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "./use-iso-layout-effect";
+import { useStore } from "./use-store";
 
 const createStore = <Value extends object, Props extends object>(
   useHook: (props: Props) => Value,
@@ -46,7 +47,7 @@ const createStore = <Value extends object, Props extends object>(
 
   return {
     Store,
-    useStore: () => null as unknown as Value,
+    useStore: () => useStore(StoreContext),
   };
 };
 

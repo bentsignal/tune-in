@@ -18,4 +18,6 @@ type ContextValue<Value extends object> = {
   version: RefObject<Version>;
 };
 
-export type { Prettify, ComponentProps, ContextValue };
+type Selector<Value, SelectedValue> = (value: Value) => SelectedValue;
+
+export type { Prettify, ComponentProps, ContextValue, Selector };

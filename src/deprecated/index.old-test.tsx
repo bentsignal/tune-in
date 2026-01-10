@@ -4,6 +4,8 @@
 // // import { renderHook } from "@testing-library/react";
 // import { createRadio } from "./create-radio";
 
+export const test = () => 5;
+
 // test("useNewRadio returns Radio context and useChannel hook", () => {
 //   const { Radio, useChannel } = createRadio<{ count: number }>({
 //     name: "TestRadio",
