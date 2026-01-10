@@ -7,6 +7,8 @@ alwaysApply: true
 
 `tune-in` is a small TypeScript/React library plus an example Next.js app.
 
+The goal of this package is to wrap React's context api to provide better performance by allowing users to only select small slices of the context object, preventing unnecessary re-renders.
+
 - Package manager: `bun` (see `package.json#packageManager`)
 - Library code: `src/`
 - Example Next.js app: `example/`

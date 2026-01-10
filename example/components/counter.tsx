@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { createStore } from "../../src/create-store";
 
 export const { Store, useStore } = createStore(
   ({ initialCount = 10 }: { initialCount?: number }) => {
     const [count1, setCount1] = useState(initialCount);
-    const increment1 = () => setCount1((prev) => prev + 1);
-    const decrement1 = () => setCount1((prev) => prev - 1);
+    const increment1 = useCallback(() => setCount1((prev) => prev + 1), []);
+    const decrement1 = useCallback(() => setCount1((prev) => prev - 1), []);
 
     const [count2, setCount2] = useState(initialCount);
-    const increment2 = () => setCount2((prev) => prev + 1);
-    const decrement2 = () => setCount2((prev) => prev - 1);
+    const increment2 = useCallback(() => setCount2((prev) => prev + 1), []);
+    const decrement2 = useCallback(() => setCount2((prev) => prev - 1), []);
 
     return {
       count1,
