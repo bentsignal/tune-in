@@ -8,9 +8,9 @@ type ComponentProps = {
 
 type Version = number;
 
-type Subscriber<Value extends object> = (
-  payload: readonly [Version, Value],
-) => void;
+type Payload<Value extends object> = readonly [Version, Value];
+
+type Subscriber<Value extends object> = (payload: Payload<Value>) => void;
 
 type ContextValue<Value extends object> = {
   subscribers: Subscriber<Value>[];
@@ -20,4 +20,11 @@ type ContextValue<Value extends object> = {
 
 type Selector<Value, SelectedValue> = (value: Value) => SelectedValue;
 
-export type { Prettify, ComponentProps, ContextValue, Selector };
+export type {
+  Prettify,
+  ComponentProps,
+  ContextValue,
+  Selector,
+  Version,
+  Payload,
+};

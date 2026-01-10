@@ -1,14 +1,11 @@
-import type { ComponentProps, ContextValue, Prettify } from "./types";
-import { createContext, JSX, RefObject, useRef } from "react";
+import type { ComponentProps, ContextValue, Prettify, Selector } from "./types";
+import { createContext, RefObject, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "./use-iso-layout-effect";
-import { useStore } from "./use-store";
+import { useStore as useStoreBase } from "./use-store";
 
 const createStore = <Value extends object, Props extends object>(
   useHook: (props: Props) => Value,
-): {
-  Store: (props: Prettify<Props & ComponentProps>) => JSX.Element;
-  useStore: () => Value;
-} => {
+) => {
   const StoreContext = createContext<RefObject<ContextValue<Value>>>({
     current: {
       subscribers: [],
@@ -34,7 +31,7 @@ const createStore = <Value extends object, Props extends object>(
       contextValue.current.value.current = hookValue;
       contextValue.current.version.current++;
       contextValue.current.subscribers.forEach((subscriber) => {
-        subscriber([versionRef.current, hookValue]);
+        subscriber([versionRef.current, valueRef.current]);
       });
     }, [hookValue]);
 
@@ -45,9 +42,13 @@ const createStore = <Value extends object, Props extends object>(
     );
   };
 
+  const useStore = <SelectedValue extends unknown>(
+    selector: Selector<Value, SelectedValue>,
+  ) => useStoreBase(StoreContext, selector);
+
   return {
     Store,
-    useStore: () => useStore(StoreContext),
+    useStore,
   };
 };
 

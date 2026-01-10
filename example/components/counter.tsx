@@ -25,12 +25,12 @@ export const Container = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const Value = () => {
-  const { count } = useStore();
+  const count = useStore((store) => store.count);
   return <p>Count: {count}</p>;
 };
 
 export const IncrementButton = () => {
-  const { increment } = useStore();
+  const increment = useStore((store) => store.increment);
   return (
     <button
       className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 w-40 h-10"
@@ -42,7 +42,7 @@ export const IncrementButton = () => {
 };
 
 export const DecrementButton = () => {
-  const { decrement } = useStore();
+  const decrement = useStore((store) => store.decrement);
   return (
     <button
       className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 w-40 h-10"
