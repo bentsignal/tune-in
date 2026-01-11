@@ -40,6 +40,9 @@ export const Container = ({ children }: { children: React.ReactNode }) => {
 
 export const Value1 = () => {
   const count1 = useStore((store) => store.count1);
+  if (count1 === undefined) {
+    return <p>Count1: undefined</p>;
+  }
   return <p>Count1: {count1}</p>;
 };
 

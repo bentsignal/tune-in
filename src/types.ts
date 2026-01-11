@@ -20,6 +20,10 @@ type ContextValue<Value extends object> = {
 
 type Selector<Value, SelectedValue> = (value: Value) => SelectedValue;
 
+type UseStoreOptions<Optional extends boolean | undefined = boolean> = {
+  optional?: Optional;
+};
+
 export type {
   Prettify,
   ComponentProps,
@@ -27,4 +31,5 @@ export type {
   Selector,
   Version,
   Payload,
+  UseStoreOptions,
 };

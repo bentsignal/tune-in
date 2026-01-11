@@ -1,4 +1,10 @@
-import type { ComponentProps, ContextValue, Prettify, Selector } from "./types";
+import type {
+  ComponentProps,
+  ContextValue,
+  Prettify,
+  Selector,
+  UseStoreOptions,
+} from "./types";
 import { createContext, RefObject, useRef } from "react";
 import { useContextSelector } from "./use-context-selector";
 import { useIsomorphicLayoutEffect } from "./use-iso-layout-effect";
@@ -42,9 +48,18 @@ const createStore = <Value extends object, Props extends object>(
     );
   };
 
-  const useStore = <SelectedValue extends unknown>(
+  const useStore = <
+    SelectedValue extends unknown,
+    Optional extends boolean | undefined = undefined,
+  >(
     selector: Selector<Value, SelectedValue>,
-  ) => useContextSelector(StoreContext, selector);
+    options?: UseStoreOptions<Optional>,
+  ): Optional extends true ? SelectedValue | undefined : SelectedValue =>
+    useContextSelector<Value, SelectedValue, Optional>(
+      StoreContext,
+      selector,
+      options,
+    );
 
   return {
     Store,
