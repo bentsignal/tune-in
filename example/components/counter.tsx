@@ -39,7 +39,7 @@ export const Container = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const Value1 = () => {
-  const count1 = useStore((store) => store.count1);
+  const count1 = useStore((store) => store.count1, { optional: true });
   if (count1 === undefined) {
     return <p>Count1: undefined</p>;
   }
@@ -49,7 +49,7 @@ export const Value1 = () => {
 export const Value1DivBy3 = () => {
   const isDivBy3 = useStore((store) => store.count1 % 3 === 0);
   return (
-    <p>Count1{isDivBy3 ? "is divisible by 3" : "is not divisible by 3"}</p>
+    <p>Count1{isDivBy3 ? " is divisible by 3" : " is not divisible by 3"}</p>
   );
 };
 
@@ -61,7 +61,7 @@ export const Value2 = () => {
 export const Value2DivBy5 = () => {
   const isDivBy5 = useStore((store) => store.count2 % 5 === 0);
   return (
-    <p>Count2{isDivBy5 ? "is divisible by 5" : "is not divisible by 5"}</p>
+    <p>Count2{isDivBy5 ? " is divisible by 5" : " is not divisible by 5"}</p>
   );
 };
 
@@ -93,7 +93,7 @@ export const DecrementButton2 = () => {
   const decrement2 = useStore((store) => store.decrement2);
   return (
     <button
-      className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 w-40 h-10 cursor-pointer"
+      className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 w-40 h-10 cursor-pointer"
       onClick={decrement2}
     >
       Decrement
@@ -105,7 +105,7 @@ export const DecrementButton1 = () => {
   const decrement1 = useStore((store) => store.decrement1);
   return (
     <button
-      className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 w-40 h-10 cursor-pointer"
+      className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 w-40 h-10 cursor-pointer"
       onClick={decrement1}
     >
       Decrement
