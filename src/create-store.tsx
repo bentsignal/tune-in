@@ -9,9 +9,9 @@ import { createContext, RefObject, useRef } from "react";
 import { useContextSelector } from "./use-context-selector";
 import { useIsomorphicLayoutEffect } from "./use-iso-layout-effect";
 
-const createStore = <Value extends object, Props extends object>(
+function createStore<Value extends object, Props extends object>(
   useHook: (props: Props) => Value,
-) => {
+) {
   const StoreContext = createContext<RefObject<ContextValue<Value>>>({
     current: {
       subscribers: [],
@@ -69,6 +69,6 @@ const createStore = <Value extends object, Props extends object>(
     Store,
     useStore,
   };
-};
+}
 
 export { createStore };
